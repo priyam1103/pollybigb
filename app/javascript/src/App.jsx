@@ -9,6 +9,7 @@ import Home from "./components/Home";
 import Create from "./components/Create";
 import Login from "./components/Auth/Login";
 import Signup from "./components/Auth/Signup";
+import Edit from "./components/Edit";
 import Layout from "./components/Layout";
 
 const PublicRoute = ({ comp }) => {
@@ -40,6 +41,9 @@ const App = () => {
           <Route exact path="/" render={() => <Home />} />
           <Route exact path="/poll/create">
             <ProtectedRoute comp={<Create />} />
+          </Route>
+          <Route exact path="/poll/edit/:id">
+            <ProtectedRoute comp={<Edit />} />
           </Route>
         </Switch>
       </Layout>

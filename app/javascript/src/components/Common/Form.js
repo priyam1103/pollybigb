@@ -63,7 +63,10 @@ export default function index({ edit, currentData }) {
           history.push("/");
           if (edit) {
             handleLoading(false);
-            handleError({ success: true, body: "Successfully updated a poll." });
+            handleError({
+              success: true,
+              body: "Successfully updated a poll.",
+            });
           } else {
             handleLoading(false);
             handleError({
@@ -83,7 +86,7 @@ export default function index({ edit, currentData }) {
       <div className="flex justify-center">
         <div className="w-3/4 px-4">
           <h2 className="text-3xl font-extrabold text-center text-indigo-500">
-            Create Poll
+            {edit ? "Edit Poll" : "Create Poll"}
           </h2>
 
           {form_fields.map((item, index) => {
@@ -92,7 +95,7 @@ export default function index({ edit, currentData }) {
                 key={index}
                 index={index}
                 label={item.label}
-                onChange={e =>
+                onChange={(e) =>
                   setFormState({ ...formstate, [item.name]: e.target.value })
                 }
                 value={formstate[item.name]}

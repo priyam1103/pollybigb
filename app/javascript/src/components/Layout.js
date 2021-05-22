@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useState } from "react";
 import Navbar from "./Navbar";
-
+import {setAuthHeaders} from "../apis/authHeaders";
 export const AppContext = createContext({});
 
 const AppProvider = AppContext.Provider;
@@ -13,6 +13,7 @@ export default function Layout({ children }) {
   const [error, setError] = useState({ success: false, body: "" });
   useEffect(() => {
     if (localStorage.getItem("polly-token") != null) {
+      setAuthHeaders();
       setAuthenticated(true);
       setUsername(localStorage.getItem("polly-username"));
     }

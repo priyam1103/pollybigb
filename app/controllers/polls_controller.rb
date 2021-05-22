@@ -1,7 +1,7 @@
 class PollsController < ApplicationController
-    # before_action :authenticate_user_using_x_auth_token
+    before_action :authenticate_user_using_x_auth_token, only: %i[create update destroy]
     attr_accessor :poll
-    before_action :load_task, only: %i[show update destroy vote]
+    before_action :load_task, only: %i[show update destroy]
 
     def index
         @polls = Poll.all
@@ -24,6 +24,39 @@ class PollsController < ApplicationController
             render status: :unprocessable_entity, json: {
             errors: @polls.errors.full_messages.to_sentence
             }
+        end
+    end
+
+    def show
+        if poll
+            render status: :ok, json: { poll:poll }
+        else
+            render status: :unprocessable_entity, json: {
+                errors:poll.errors.full_messages.to_sentence
+            }
+        end
+    end
+
+    def update
+        if poll.update(poll_params)
+            poll_hash =  {poll.option1 => 0,poll.option2 => 0,poll.option3 => 0,poll.option4 => 0}
+            poll.polls = poll_hash
+            if poll.save
+                render status: :ok, json: { notice: 'Successfully updated task.' }
+            else
+                render status: :unprocessable_entity, json: { errors: @task.errors.full_messages }
+            end
+        else
+            render status: :unprocessable_entity, json: { errors: @task.errors.full_messages }
+        end
+    end
+
+    def destroy
+        if poll.destroy
+            render status: :ok, json: { notice: 'Successfully deleted poll.' }
+        else
+            render status: :unprocessable_entity, json: { errors:
+            poll.errors.full_messages }
         end
     end
     
