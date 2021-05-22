@@ -2,11 +2,14 @@
 // present in this directory. You're encouraged to place your actual application logic in
 // a relevant structure within app/javascript and only use these pack files to reference
 // that code so it'll be compiled.
+require("@rails/ujs").start(); 
 
-import Rails from "@rails/ujs"
-import "../stylesheets/application.scss"
-import * as ActiveStorage from "@rails/activestorage"
-import "channels"
-
-Rails.start()
-ActiveStorage.start()
+import Rails from "@rails/ujs";
+import "../stylesheets/application.scss";
+import * as ActiveStorage from "@rails/activestorage";
+import "channels";
+var componentRequireContext = require.context("src", true); 
+var ReactRailsUJS = require("react_ujs"); 
+ReactRailsUJS.useContext(componentRequireContext); 
+Rails.start();
+ActiveStorage.start();
