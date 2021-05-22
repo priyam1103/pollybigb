@@ -1,7 +1,7 @@
 class PollsController < ApplicationController
-    before_action :authenticate_user_using_x_auth_token, only: %i[create update destroy]
+    before_action :authenticate_user_using_x_auth_token, only: %i[create update destroy vote]
     attr_accessor :poll
-    before_action :load_task, only: %i[show update destroy]
+    before_action :load_task, only: %i[show update destroy vote]
 
     def index
         @polls = Poll.all
@@ -59,11 +59,26 @@ class PollsController < ApplicationController
             poll.errors.full_messages }
         end
     end
-    
+
+    def vote
+        if poll
+            selected_option = params[:selected_option]
+            poll_object =  eval(poll.polls)
+            poll_object[selected_option] = poll_object[selected_option] + 1 
+            poll.polls = poll_object
+            poll.save
+            render status: :ok, json: { poll: poll, updated_polls: eval(poll.polls) }
+        else
+            render status: :unprocessable_entity, json: {
+                errors: poll.errors.full_messages.to_sentence
+            }
+        end
+    end
+
     def poll_params
         params.require(:poll).permit(:title, :option1, :option2, :option3, :option4)
     end
-
+    
     private
 
     def load_task

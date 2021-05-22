@@ -51,30 +51,33 @@ export default function AuthForm({ isSignup }) {
       !email_regex.test(formstate.email)
     ) {
       handleLoading(false);
-      handleError(false, "Please enter a valid email");
+      handleError({ success: false, body: "Please enter a valid email" });
       return;
     } else if (formstate.password.trim().length < 6) {
       handleLoading(false);
-      handleError(false, "Please enter a password of minimum length 5");
+      handleError({
+        success: false,
+        body: "Please enter a password of minimum length 5",
+      });
 
       return;
     } else {
       if (isSignup) {
         if (formstate.name.trim().length == 0) {
           handleLoading(false);
-          handleError(false, "Please enter the first name.");
+          handleError({ success: false, body: "Please enter the first name." });
 
           return;
         } else if (formstate.lastname.trim().length == 0) {
           handleLoading(false);
-          handleError(false, "Please enter the last name.");
+          handleError({ success: false, body: "Please enter the last name." });
 
           return;
         } else if (
           formstate.password.trim() !== formstate.password_confirmation.trim()
         ) {
           handleLoading(false);
-          handleError(false, "Passwords do not match.");
+          handleError({ success: false, body: "Passwords do not match." });
 
           return;
         } else {
@@ -83,21 +86,23 @@ export default function AuthForm({ isSignup }) {
             autheticateApp(response.data.auth_token, response.data.firstname);
             handleLoading(false);
             history.push("/");
-            handleError(true, "Successfully Signed Up");
+            handleError({ success: true, body: "Successfully Signed Up" });
           } catch (err) {
+            console.log(err.response);
             handleLoading(false);
-            handleError(false, "Error occured");
+            handleError({ success: false, body: "Error occured" });
           }
         }
       } else {
         try {
           const response = await authApi.login({ ...formstate });
           autheticateApp(response.data.auth_token, response.data.firstname);
-
+          handleLoading(false);
           history.push("/");
-          handleError(true, "Successfully Logged In");
+          handleError({ success: true, body: "Successfully Logged In" });
         } catch (err) {
-          console.log(err.response);
+          handleError({ success: false, body: "Invalid credentails." });
+          handleLoading(false);
         }
       }
     }

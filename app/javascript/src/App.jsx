@@ -11,6 +11,7 @@ import Login from "./components/Auth/Login";
 import Signup from "./components/Auth/Signup";
 import Edit from "./components/Edit";
 import Layout from "./components/Layout";
+import Poll from "./components/Poll";
 
 const PublicRoute = ({ comp }) => {
   return localStorage.getItem("polly-token") != null ? (
@@ -44,6 +45,9 @@ const App = () => {
           </Route>
           <Route exact path="/poll/edit/:id">
             <ProtectedRoute comp={<Edit />} />
+          </Route>
+          <Route exact path="/poll/:id">
+            <ProtectedRoute comp={<Poll />} />
           </Route>
         </Switch>
       </Layout>
