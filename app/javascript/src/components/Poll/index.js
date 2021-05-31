@@ -26,18 +26,23 @@ export default function Index() {
     }
   }
   async function vote() {
-    try {
-      handleLoading(true);
-      const response = await pollsApi.vote(id, {
-        selected_option: selectedOption,
-      });
-      if (response.status === 200) {
-        setVoted(true);
+    if (selectedOption !== "") {
+      try {
+        handleLoading(true);
+        const response = await pollsApi.vote(id, {
+          selected_option: selectedOption,
+        });
+        if (response.status === 200) {
+          setVoted(true);
+          handleLoading(false);
+          setPollResult(response.data.updated_polls);
+        }
+      } catch (err) {
+        handleError({ success: false, body: "Please try again." });
         handleLoading(false);
-        setPollResult(response.data.updated_polls);
       }
-    } catch (err) {
-      handleError({ success: false, body: "Please try again." });
+    } else {
+      handleError({ success: false, body: "Please select an option." });
       handleLoading(false);
     }
   }

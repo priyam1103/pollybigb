@@ -9,9 +9,6 @@ class ApplicationController < ActionController::Base
             user.authentication_token, auth_token
           )
           @current_user = user
-          puts "hwllo"
-          puts @current_user
-          puts "hwllo"
         else
           render status: :unauthorized, json: {
             errors: ["Could not authenticate with the provided credentials"]

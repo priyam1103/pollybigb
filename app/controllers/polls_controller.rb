@@ -16,7 +16,7 @@ class PollsController < ApplicationController
 
     def create
         @polls = Poll.new(poll_params)
-        poll_hash =  {@polls.option1 => 0,@polls.option2 => 0,@polls.option3 => 0,@polls.option4 => 0}
+        poll_hash =  {@polls.option1 => 0, @polls.option2 => 0, @polls.option3 => 0, @polls.option4 => 0}
         @polls.polls = poll_hash
         if @polls.save
             render status: :ok, json: { notice: 'Poll created!', poll: @polls  }
@@ -29,7 +29,7 @@ class PollsController < ApplicationController
 
     def show
         if poll
-            render status: :ok, json: { poll:poll }
+            render status: :ok, json: { poll: poll }
         else
             render status: :unprocessable_entity, json: {
                 errors:poll.errors.full_messages.to_sentence
@@ -39,7 +39,7 @@ class PollsController < ApplicationController
 
     def update
         if poll.update(poll_params)
-            poll_hash =  {poll.option1 => 0,poll.option2 => 0,poll.option3 => 0,poll.option4 => 0}
+            poll_hash =  {poll.option1 => 0, poll.option2 => 0, poll.option3 => 0, poll.option4 => 0}
             poll.polls = poll_hash
             if poll.save
                 render status: :ok, json: { notice: 'Successfully updated task.' }
@@ -82,7 +82,6 @@ class PollsController < ApplicationController
     private
 
     def load_task
-        puts params[:id]
         @poll = Poll.find(params[:id])
         rescue ActiveRecord::RecordNotFound => errors
             render json: {errors: errors}
