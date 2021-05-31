@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
-  attr_accessor :poll
+  attr_accessor :user
   def setup
     @user = User.new(name: 'Jhon Doe',
                      email: 'jhon@gmail.com',
