@@ -1,6 +1,7 @@
 import React, { createContext, useEffect, useState } from "react";
 import Navbar from "./Navbar";
-import {setAuthHeaders} from "apis/authHeaders";
+import { setAuthHeaders } from "apis/authHeaders";
+
 export const AppContext = createContext({});
 
 const AppProvider = AppContext.Provider;
@@ -11,6 +12,7 @@ export default function Layout({ children }) {
   const [isError, SetIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState({ success: false, body: "" });
+
   useEffect(() => {
     if (localStorage.getItem("polly-token") != null) {
       setAuthHeaders();
@@ -18,6 +20,7 @@ export default function Layout({ children }) {
       setUsername(localStorage.getItem("polly-username"));
     }
   }, []);
+
   function autheticateApp(auth_token, username) {
     localStorage.setItem("polly-token", auth_token);
     localStorage.setItem("polly-username", username);
@@ -25,9 +28,11 @@ export default function Layout({ children }) {
     setUsername(username);
     setAuthenticated(true);
   }
+
   function handleLoading(bool) {
     setIsLoading(bool);
   }
+
   function handleError({ success, body }) {
     if (!isError) {
       SetIsError(true);
@@ -38,6 +43,7 @@ export default function Layout({ children }) {
       setError({ success: false, body: "" });
     }, 3000);
   }
+  
   return (
     <AppProvider
       value={{

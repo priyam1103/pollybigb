@@ -3,7 +3,6 @@ Rails.application.routes.draw do
   resource :sessions, only: %i[create destroy]
   resources :polls
   resources :users, only: %i[create index]
-  put "/polls/vote/:id" => "polls#vote"
   root "home#index"
   get '*path', to: 'home#index', via: :all
 end

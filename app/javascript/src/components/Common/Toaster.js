@@ -1,8 +1,11 @@
 import React, { useContext} from "react";
 import "./Toaster.css";
 import { AppContext } from "../Layout";
+
 export default function Toaster() {
+
   const { error } = useContext(AppContext);
+
   if (error.success) {
     return (
       <div className="toaster mx-auto bg-green-500 border-l-4 border-green-700 py-2 px-3 shadow-md mb-2">

@@ -3,6 +3,7 @@ import TextInput from "./TextInput";
 import { AppContext } from "../Layout";
 import pollsApi from "../../apis/polls";
 import { useHistory } from "react-router-dom";
+
 export default function index({ edit, currentData }) {
   const { handleError, handleLoading } = useContext(AppContext);
   const history = useHistory();
@@ -33,6 +34,7 @@ export default function index({ edit, currentData }) {
       placeholder: "Option 4",
     },
   ];
+
   const [formstate, setFormState] = useState({
     title: edit ? currentData.title : "",
     option1: edit ? currentData.option1 : "",
@@ -54,10 +56,11 @@ export default function index({ edit, currentData }) {
           success: false,
           body: "Please fill the details properly.",
         });
-      } else {
+      }
+      else {
         handleLoading(true);
         const response = edit
-          ? await pollsApi.editPoll(currentData.id, { ...formstate })
+          ? await pollsApi.editPoll(currentData.id, { ...formstate, update_type:"edit" })
           : await pollsApi.createPoll({ ...formstate });
         if (response.status === 200) {
           history.push("/");
@@ -81,6 +84,7 @@ export default function index({ edit, currentData }) {
       handleError(false, "Error occured");
     }
   }
+
   return (
     <div className="bg-white border shadow-md mx-auto mt-12 md-8 w-3/4 px-2 py-4">
       <div className="flex justify-center">
@@ -95,7 +99,7 @@ export default function index({ edit, currentData }) {
                 key={index}
                 index={index}
                 label={item.label}
-                onChange={(e) =>
+                onChange={e =>
                   setFormState({ ...formstate, [item.name]: e.target.value })
                 }
                 value={formstate[item.name]}

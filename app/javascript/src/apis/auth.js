@@ -5,6 +5,7 @@ const login = payload =>
   axios.post("/sessions", {
     login: { email: payload.email, password: payload.password },
   });
+  
 const authApi = {
   login,
   signup,

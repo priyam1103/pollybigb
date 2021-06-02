@@ -1,7 +1,9 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
+
 export default function PollOptionsCard({ polls, destroyPoll, authenticated }) {
   const history = useHistory();
+  
   return (
     <div className="bg-white border shadow-md mx-auto mt-12 md-8 w-3/4 px-2 py-4">
       <div className="flex justify-center px-auto">

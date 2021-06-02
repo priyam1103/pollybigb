@@ -3,9 +3,11 @@ import pollsApi from "apis/polls";
 import "./home.css";
 import { AppContext } from "../Layout";
 import PollOptionsCard from "./PollOptionsCard";
+
 export default function index() {
   const { authenticated, handleLoading, handleError } = useContext(AppContext);
   const [polls_array, setPollsArray] = useState([]);
+
   useEffect(() => {
     getPolls();
   }, []);
@@ -23,6 +25,7 @@ export default function index() {
       handleError({ success: false, body: "Error Occured" });
     }
   }
+
   async function getPolls() {
     try {
       handleLoading(true);
@@ -35,6 +38,7 @@ export default function index() {
       handleLoading(false);
     }
   }
+  
   return (
     <div>
       <PollOptionsCard

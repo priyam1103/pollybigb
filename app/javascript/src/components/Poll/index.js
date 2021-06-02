@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import pollsApi from "../../apis/polls";
 import { AppContext } from "../Layout";
+
 export default function Index() {
   const { id } = useParams();
   const { handleLoading, handleError } = useContext(AppContext);
@@ -9,6 +10,7 @@ export default function Index() {
   const [selectedOption, setSelectedOption] = useState("");
   const [pollResult, setPollResult] = useState({});
   const [voted, setVoted] = useState(false);
+
   useEffect(() => {
     fetchData(id);
   }, []);
@@ -25,12 +27,14 @@ export default function Index() {
       handleLoading(false);
     }
   }
+
   async function vote() {
     if (selectedOption !== "") {
       try {
         handleLoading(true);
-        const response = await pollsApi.vote(id, {
+        const response = await pollsApi.editPoll(id, {
           selected_option: selectedOption,
+          update_type:"vote"
         });
         if (response.status === 200) {
           setVoted(true);
@@ -46,6 +50,7 @@ export default function Index() {
       handleLoading(false);
     }
   }
+
   function getPercentage(val) {
     var total_poll = 0;
     Object.keys(pollResult).map(item => {
@@ -53,6 +58,7 @@ export default function Index() {
     });
     return ((pollResult[val] / total_poll) * 100).toFixed(2);
   }
+
   return (
     <div className="bg-white border shadow-md sm:w-100 mx-auto mt-12 md-8 w-3/4 px-2 py-4">
       <div className="flex justify-center w-full">

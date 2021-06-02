@@ -20,6 +20,7 @@ const PublicRoute = ({ comp }) => {
     <>{comp}</>
   );
 };
+
 const ProtectedRoute = ({ comp }) => {
   return localStorage.getItem("polly-token") != null ? (
     <>{comp}</>

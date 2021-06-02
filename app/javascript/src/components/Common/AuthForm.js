@@ -4,6 +4,7 @@ import TextInput from "./TextInput";
 import authApi from "../../apis/auth";
 import { useHistory } from "react-router-dom";
 import { AppContext } from "../Layout";
+
 export default function AuthForm({ isSignup }) {
   const history = useHistory();
   const { autheticateApp, handleError, handleLoading } = useContext(AppContext);
@@ -45,7 +46,6 @@ export default function AuthForm({ isSignup }) {
   async function handleSubmit() {
     var email_regex = /\S+@\S+\.\S+/;
     handleLoading(true);
-
     if (
       formstate.email.trim().length == 0 &&
       !email_regex.test(formstate.email)
@@ -59,26 +59,23 @@ export default function AuthForm({ isSignup }) {
         success: false,
         body: "Please enter a password of minimum length 5",
       });
-
       return;
-    } else {
+    }
+    else {
       if (isSignup) {
         if (formstate.name.trim().length == 0) {
           handleLoading(false);
           handleError({ success: false, body: "Please enter the first name." });
-
           return;
         } else if (formstate.lastname.trim().length == 0) {
           handleLoading(false);
           handleError({ success: false, body: "Please enter the last name." });
-
           return;
         } else if (
           formstate.password.trim() !== formstate.password_confirmation.trim()
         ) {
           handleLoading(false);
           handleError({ success: false, body: "Passwords do not match." });
-
           return;
         } else {
           try {
@@ -107,6 +104,7 @@ export default function AuthForm({ isSignup }) {
       }
     }
   }
+
   return (
     <div className="flex h-full">
       <div className="bg-white border shadow-md mx-auto mt-16 md-8 w-1/2 px-2 py-4">

@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
     skip_before_action :verify_authenticity_token
+    
     def authenticate_user_using_x_auth_token
         user_username = request.headers["X-AUTH-USERNAME"]
         auth_token = request.headers["X-AUTH-TOKEN"].presence

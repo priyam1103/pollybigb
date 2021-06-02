@@ -2,9 +2,10 @@ import React, { useContext } from "react";
 import Toaster from "./Common/Toaster";
 import { AppContext } from "./Layout";
 import Loader from "./Common/Loader";
+
 export default function Navbar() {
-  const { username, authenticated, isError, handleError, isLoading } =
-    useContext(AppContext);
+  const { username, authenticated, isError, handleError, isLoading } = useContext(AppContext);
+  
   return (
     <nav className="bg-white px-2 py-2">
       <div className="container mx-auto">

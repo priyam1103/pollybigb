@@ -2,6 +2,7 @@ require "test_helper"
 
 class PollTest < ActiveSupport::TestCase
   attr_accessor :poll
+  
   def setup
     @poll = Poll.new
   end
